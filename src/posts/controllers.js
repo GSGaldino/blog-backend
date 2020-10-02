@@ -9,7 +9,8 @@ module.exports = {
 
   async create(req, res){
     const {post_title, post_content} = req.body;
-    const [post_id] = await connection('posts').insert({post_title, post_content});
+    const {path} = req.file;
+    const [post_id] = await connection('posts').insert({post_title, post_content, path});
     
     res.json({
       post_id: post_id,

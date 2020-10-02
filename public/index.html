@@ -1,28 +1,86 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image uploader</title>
+  <style>
+    *,
+    button,
+    input{
+      margin: 0;
+      padding: 0;
+      outline: 0;
+      border: none;
+      box-sizing: border-box;
+    }
+    body{
+      font-family: 'Courier New', Courier, monospace;
+    }
+    header{
+      text-align: center;
+      padding: 20px;
+      border: 2px dotted #dcdce6;
+    }
+    header h1{
+      color: #111;
+    }
+    section{
+      text-align: center;
+    }
+    input,
+    textarea{
+      border: 2px solid #dcdce6;
+      border-radius: 8px;
+    }
+    input[type="submit"]{
+      display: block;
+      margin: 20px auto;
+      width: 200px;
+      background: indigo;
+      color: #fff;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover{
+      filter: saturate(110%);
+      filter: brightness(120%);
+    }
+    label{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
 <body>
-    <form id="form" enctype="multipart/form-data">
-        <input type="file" name="avatar" />
-        <br/>
-        <button type="submit" name="upload">Upload</button>
-        <br/>
-        <img id="avatar">
-    </form>
+  <header>
+    <h1>New post</h1>
+  </header>
 
-    <script>
-        form.addEventListener('submit', event => {
-            event.preventDefault();
-            let formData = new FormData();
-            formData.append('avatar', event.target[0].files[0]);
-            fetch('http://localhost:7755/api/avatar', {method: 'post', body: formData})
-            .then(res => res.json())
-            .then(res => {
-                avatar.src = `http://localhost:7755${res.payload.url}`;
-                console.log(res.payload)
-            })
-            .catch(console.log);
-        });
-    </script>
+  <section>
+    <form action="/api/posts" method="post" enctype="multipart/form-data">
+      <label>
+        Título
+        <input type="text" name="post_title">
+      </label>
+      <label>
+        Conteúdo
+        <textarea name="post_content"></textarea>
+      </label>
+      <input type="file" name="image">
+      <input type="submit" value="enviar"/>
+    </form>
+  </section>
+
+  <script>
+    const form = document.querySelector('#form');
+    console.log(form)
+  </script>
+  
 </body>
 </html>
